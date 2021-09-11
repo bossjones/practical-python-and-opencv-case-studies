@@ -149,7 +149,9 @@ def autogen(ctx, loc="local", verbose=0, clean=False, dry_run=True, comment=""):
 
         # open alembic.ini and get path to migration
 
-        versions = glob.glob("practical_python_and_opencv_case_studies/migrations/versions/*.py")
+        versions = glob.glob(
+            "practical_python_and_opencv_case_studies/migrations/versions/*.py"
+        )
 
         if len(versions) > 0:
             for i in versions:
@@ -283,7 +285,9 @@ def alembic(
 
         # open alembic.ini and get path to migration
 
-        versions = glob.glob("practical_python_and_opencv_case_studies/migrations/versions/*.py")
+        versions = glob.glob(
+            "practical_python_and_opencv_case_studies/migrations/versions/*.py"
+        )
 
         if len(versions) > 0:
             for i in versions:

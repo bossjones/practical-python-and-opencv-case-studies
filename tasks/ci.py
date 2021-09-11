@@ -128,7 +128,9 @@ def mypy(ctx, loc="local", verbose=0):
         ctx.config["run"]["env"][k] = v
 
     # ctx.run("mypy --config-file ./lint-configs-python/python/mypy.ini practical_python_and_opencv_case_studies tests")
-    ctx.run("mypy --config-file ./setup.cfg practical_python_and_opencv_case_studies tests")
+    ctx.run(
+        "mypy --config-file ./setup.cfg practical_python_and_opencv_case_studies tests"
+    )
 
 
 @task(

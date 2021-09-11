@@ -22,7 +22,10 @@ from typing import Deque, Optional, cast
 
 from loguru import logger
 
-from practical_python_and_opencv_case_studies.models.loggers import LoggerModel, LoggerPatch
+from practical_python_and_opencv_case_studies.models.loggers import (
+    LoggerModel,
+    LoggerPatch,
+)
 
 LOGGERS = __name__
 
