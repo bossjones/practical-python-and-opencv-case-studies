@@ -2,7 +2,7 @@
 pathlib_mate
 isort
 pdbpp
-black
+black==21.7b0
 pre-commit
 mccabe
 # SOURCE: https://github.com/ionelmc/python-lazy-object-proxy

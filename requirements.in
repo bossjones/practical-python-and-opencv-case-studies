@@ -1,31 +1,7 @@
-
 cython
-
 matplotlib
 Pillow
 pip-tools
-# pipdeptree
-# progressbar2
-# requests
-# scenedetect[opencv]
-# scikit-image
-# scikit-learn
-# scipy
-# seaborn
-# statsmodels
-# tensorflow
-# nltk
-# h5py
-# statistics
-# tweepy
-# plotly
-# beautifulsoup4
-# -e git://github.com/GantMan/nsfw_model.git#egg=nsfw-detector
-# -e git://github.com/PySimpleSQL/PySimpleSQL.git#egg=pysimplesql
-# torch
-# torchvision
-# torchaudio
-# # needed for mediafile
 # SOURCE: https://www.tutorialspoint.com/python_digital_forensics/python_digital_forensics_investigating_embedded_metadata.htm
 mutagen
 # pysimplegui
@@ -46,21 +22,6 @@ pydantic[email]
 passlib[bcrypt]
 Unidecode
 python-slugify
-
-# Überzug is a command line util which allows to draw images on terminals by using child windows.
-# ueberzug
-
-# Asciimatics is a package to help people create full-screen text UIs (from interactive forms to ASCII animations) on any platform. It is licensed under the Apache Software Foundation License 2.0.
-# https://stackoverflow.com/questions/59223002/tmux-how-to-display-an-image-in-a-pane
-# asciimatics
-
-# A library for creating CUI/TUI interfaces with pre-built widgets in python.
-# Easily build text-based user interfaces on both Linux and Windows.
-# https://github.com/jwlodek/py_cui
-
-# A command line interface for working with git written in python with the help of py_cui.
-# https://github.com/jwlodek/pyautogit
-# py_cui
 appdirs
 imageio
 imageio-ffmpeg
@@ -124,18 +85,10 @@ pyfzf
 # This module provides RFC 3986 compliant functions for parsing, classifying and composing URIs and URI references, largely replacing the Python Standard Library's urllib.parse module.
 uritools
 uritemplate
-youtube_dl
 # https://pypi.org/project/ffmpeg-normalize/
 # https://superuser.com/questions/323119/how-can-i-normalize-audio-using-ffmpeg
 ffmpeg-normalize
-gallery-dl
 factory-boy
-
-
-# alembic
-
-# SQLAlchemy
-# SQLAlchemy-Utils
 tenacity
 scenedetect[opencv]
 imutils
@@ -153,15 +106,10 @@ pytz
 boto3
 meilisearch
 backoff
-
 # https://github.com/cdown/srt
 srt
 deepspeech
 librosa
-
-
-
-
 # ml stuff from https://github.com/bossjones/fzf-lab/blob/main/ml/requirements.in
 # Fast hierarchical clustering routines for R and Python.
 fastcluster
@@ -183,7 +131,6 @@ nltk
 plotly
 # Screen-scraping library
 beautifulsoup4
-
 # DISABLED: # for now # -e git://github.com/GantMan/nsfw_model.git#egg=nsfw-detector
 # Tensors and Dynamic neural networks in Python with strong GPU acceleration
 torch
@@ -191,6 +138,7 @@ torch
 torchvision
 # An audio package for PyTorch
 torchaudio
+scikit-image
 
 
 # needed for https://github.com/A2Zadeh/CMU-MultimodalSDK#user-content-installation
@@ -207,4 +155,4 @@ tokenizers
 simpletransformers
 # Python framework for fast Vector Space Modelling
 gensim
-quandl
+mahotas

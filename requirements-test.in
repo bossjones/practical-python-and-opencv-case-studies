@@ -1,5 +1,6 @@
 # dependencies for test
--c requirements.txt
+# -c requirements.txt
+-c requirements-dev.txt
 pytest
 pytest-cov
 coveralls
