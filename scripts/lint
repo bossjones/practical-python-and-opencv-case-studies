@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+set -x
+
+# pylint -E --rcfile=./lint-configs-python/python/.pylintrc
+pylint --disable=all --enable=F,E --rcfile ./lint-configs-python/python/pylintrc practical_python_and_opencv_case_studies
+# TODO: Re enable these guys 2/17/2021
+# flake8 practical_python_and_opencv_case_studies --exclude=practical_python_and_opencv_case_studies/db/migrations
+# mypy practical_python_and_opencv_case_studies
+
+# black --check practical_python_and_opencv_case_studies --diff
+# isort --recursive --check-only practical_python_and_opencv_case_studies

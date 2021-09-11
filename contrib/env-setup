@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+pyenv shell 3.9.0
+
+export WORKON_HOME="$HOME/.pyenv/versions"
+export PROJECT_HOME=$HOME/dev
+
+mkvirtualenv practical-python-and-opencv-case-studies3
+
+workon practical-python-and-opencv-case-studies3
+
+pip install -e .[dev,tests,docs]

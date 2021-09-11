@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -e
+set -x
+
+pytest --cov=practical_python_and_opencv_case_studies --cov=tests --cov-report=term-missing --cov-config=setup.cfg ${@}

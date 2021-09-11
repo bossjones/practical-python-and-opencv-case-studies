@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+isort --recursive  --force-single-line-importspractical_python_and_opencv_case_studiesp tests
+autoflake --recursive --remove-all-unused-imports --remove-unused-variables --in-place practical_python_and_opencv_case_studies tests
+black practical_python_and_opencv_case_studies tests
+isort --recursive practical_python_and_opencv_case_studies tests
