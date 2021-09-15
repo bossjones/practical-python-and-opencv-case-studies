@@ -3,7 +3,8 @@
 
 import argparse
 
-from cv2 import cv2
+# from cv2 import cv2
+import cv2
 import imutils
 # Import the necessary packages
 import numpy as np
@@ -21,6 +22,8 @@ cv2.imshow("Original", image)
 # not look skewed or distorted -- therefore, we calculate
 # the ratio of the new image to the old image. Let's make
 # our new image have a width of 150 pixels
+# r = aspect ratio
+# dim = dimensions
 r = 150.0 / image.shape[1]
 dim = (150, int(image.shape[0] * r))
 
