@@ -1,6 +1,6 @@
 # USAGE
 # python rotate.py --image ../images/trex.png
-
+from typing import Union, Any
 import argparse
 
 # from cv2 import cv2
@@ -15,6 +15,9 @@ ap.add_argument("-i", "--image", required=True, help="Path to the image")
 args = vars(ap.parse_args())
 
 # Load the image and show it
+# SOURCE: https://stackoverflow.com/questions/56611983/type-hints-and-chained-assignment-and-multiple-assignments
+image: Union[np.ndarray, Any]
+
 image = cv2.imread(args["image"])
 cv2.imshow("Original", image)
 
