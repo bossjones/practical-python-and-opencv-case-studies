@@ -1,15 +1,15 @@
 # USAGE
 # python splitting_and_merging.py --image ../images/wave.png
 
+import argparse
+
+from cv2 import cv2
 # Import the necessary packages
 import numpy as np
-import argparse
-import cv2
 
 # Construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required = True,
-	help = "Path to the image")
+ap.add_argument("-i", "--image", required=True, help="Path to the image")
 args = vars(ap.parse_args())
 
 # Load the image and grab each channel: Red, Green, and Blue
@@ -32,7 +32,7 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 
 # Now, let's visualize each channel in color
-zeros = np.zeros(image.shape[:2], dtype = "uint8")
+zeros = np.zeros(image.shape[:2], dtype="uint8")
 cv2.imshow("Red", cv2.merge([zeros, zeros, R]))
 cv2.imshow("Green", cv2.merge([zeros, G, zeros]))
 cv2.imshow("Blue", cv2.merge([B, zeros, zeros]))

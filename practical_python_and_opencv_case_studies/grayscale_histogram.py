@@ -1,15 +1,15 @@
 # USAGE
 # python grayscale_histogram.py --image ../images/beach.png
 
+import argparse
+
+from cv2 import cv2
 # Import the necessary packages
 from matplotlib import pyplot as plt
-import argparse
-import cv2
 
 # Construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required = True,
-	help = "Path to the image")
+ap.add_argument("-i", "--image", required=True, help="Path to the image")
 args = vars(ap.parse_args())
 
 # Load the image, convert it to grayscale, and show it

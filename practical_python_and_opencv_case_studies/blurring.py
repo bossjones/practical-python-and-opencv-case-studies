@@ -2,15 +2,15 @@
 # python blurring.py --image ../images/trex.png
 # python blurring.py --image ../images/beach.png
 
+import argparse
+
+from cv2 import cv2
 # Import the necessary packages
 import numpy as np
-import argparse
-import cv2
 
 # Construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required = True,
-	help = "Path to the image")
+ap.add_argument("-i", "--image", required=True, help="Path to the image")
 args = vars(ap.parse_args())
 
 # Load the image and show it
@@ -25,10 +25,9 @@ cv2.imshow("Original", image)
 # central must be odd. Here are a few examples with varying
 # kernel sizes. Notice how the larger the kernel gets, the
 # more blurred the image becomes
-blurred = np.hstack([
-	cv2.blur(image, (3, 3)),
-	cv2.blur(image, (5, 5)),
-	cv2.blur(image, (7, 7))])
+blurred = np.hstack(
+    [cv2.blur(image, (3, 3)), cv2.blur(image, (5, 5)), cv2.blur(image, (7, 7))]
+)
 cv2.imshow("Averaged", blurred)
 cv2.waitKey(0)
 
@@ -37,10 +36,13 @@ cv2.waitKey(0)
 # deviation in the X and Y direction. Again, as the standard
 # deviation size increases, the image becomes progressively
 # more blurred
-blurred = np.hstack([
-	cv2.GaussianBlur(image, (3, 3), 0),
-	cv2.GaussianBlur(image, (5, 5), 0),
-	cv2.GaussianBlur(image, (7, 7), 0)])
+blurred = np.hstack(
+    [
+        cv2.GaussianBlur(image, (3, 3), 0),
+        cv2.GaussianBlur(image, (5, 5), 0),
+        cv2.GaussianBlur(image, (7, 7), 0),
+    ]
+)
 cv2.imshow("Gaussian", blurred)
 cv2.waitKey(0)
 
@@ -49,10 +51,9 @@ cv2.waitKey(0)
 # method mentioned above, the median method (as the name
 # suggests), calculates the median pixel value amongst the
 # surrounding area.
-blurred = np.hstack([
-	cv2.medianBlur(image, 3),
-	cv2.medianBlur(image, 5),
-	cv2.medianBlur(image, 7)])
+blurred = np.hstack(
+    [cv2.medianBlur(image, 3), cv2.medianBlur(image, 5), cv2.medianBlur(image, 7)]
+)
 cv2.imshow("Median", blurred)
 cv2.waitKey(0)
 
@@ -63,9 +64,12 @@ cv2.waitKey(0)
 # along with sigma values for color and coordinate space.
 # The larger these sigma values, the more pixels will be
 # considered within the neighborhood.
-blurred = np.hstack([
-	cv2.bilateralFilter(image, 5, 21, 21),
-	cv2.bilateralFilter(image, 7, 31, 31),
-	cv2.bilateralFilter(image, 9, 41, 41)])
+blurred = np.hstack(
+    [
+        cv2.bilateralFilter(image, 5, 21, 21),
+        cv2.bilateralFilter(image, 7, 31, 31),
+        cv2.bilateralFilter(image, 9, 41, 41),
+    ]
+)
 cv2.imshow("Bilateral", blurred)
 cv2.waitKey(0)

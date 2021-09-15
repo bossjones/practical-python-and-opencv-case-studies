@@ -3,15 +3,16 @@
 
 # Import the necessary packages
 from __future__ import print_function
-import numpy as np
+
 import argparse
+
+from cv2 import cv2
 import mahotas
-import cv2
+import numpy as np
 
 # Construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required = True,
-	help = "Path to the image")
+ap.add_argument("-i", "--image", required=True, help="Path to the image")
 args = vars(ap.parse_args())
 
 # Load the image, convert it to grayscale, and blur it slightly

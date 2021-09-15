@@ -1,15 +1,15 @@
 # USAGE
 # python simple_thresholding.py --image ../images/coins.png
 
+import argparse
+
+from cv2 import cv2
 # Import the necessary packages
 import numpy as np
-import argparse
-import cv2
 
 # Construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required = True,
-	help = "Path to the image")
+ap.add_argument("-i", "--image", required=True, help="Path to the image")
 args = vars(ap.parse_args())
 
 # Load the image, convert it to grayscale, and blur it slightly
@@ -32,5 +32,5 @@ cv2.imshow("Threshold Binary", thresh)
 
 # Finally, let's use our threshold as a mask and visualize only
 # the coins in the image
-cv2.imshow("Coins", cv2.bitwise_and(image, image, mask = threshInv))
+cv2.imshow("Coins", cv2.bitwise_and(image, image, mask=threshInv))
 cv2.waitKey(0)

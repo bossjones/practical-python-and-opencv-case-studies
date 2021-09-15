@@ -3,16 +3,17 @@
 
 # Import the necessary packages
 from __future__ import print_function
-from pyimagesearch import imutils
-import numpy as np
+
 import argparse
+
+from cv2 import cv2
 import imutils
-import cv2
+import numpy as np
+from pyimagesearch import imutils
 
 # Construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required = True,
-	help = "Path to the image")
+ap.add_argument("-i", "--image", required=True, help="Path to the image")
 args = vars(ap.parse_args())
 
 # Load the image, convert it to grayscale, and blur it slightly
@@ -45,21 +46,21 @@ cv2.waitKey(0)
 
 # Now, let's loop over each contour
 for (i, c) in enumerate(cnts):
-	# We can compute the 'bounding box' for each contour, which is
-	# the rectangle that encloses the contour
-	(x, y, w, h) = cv2.boundingRect(c)
+    # We can compute the 'bounding box' for each contour, which is
+    # the rectangle that encloses the contour
+    (x, y, w, h) = cv2.boundingRect(c)
 
-	# Now that we have the contour, let's extract it using array
-	# slices
-	print("Coin #{}".format(i + 1))
-	coin = image[y:y + h, x:x + w]
-	cv2.imshow("Coin", coin)
+    # Now that we have the contour, let's extract it using array
+    # slices
+    print("Coin #{}".format(i + 1))
+    coin = image[y : y + h, x : x + w]
+    cv2.imshow("Coin", coin)
 
-	# Just for fun, let's construct a mask for the coin by finding
-	# The minumum enclosing circle of the contour
-	mask = np.zeros(image.shape[:2], dtype = "uint8")
-	((centerX, centerY), radius) = cv2.minEnclosingCircle(c)
-	cv2.circle(mask, (int(centerX), int(centerY)), int(radius), 255, -1)
-	mask = mask[y:y + h, x:x + w]
-	cv2.imshow("Masked Coin", cv2.bitwise_and(coin, coin, mask = mask))
-	cv2.waitKey(0)
+    # Just for fun, let's construct a mask for the coin by finding
+    # The minumum enclosing circle of the contour
+    mask = np.zeros(image.shape[:2], dtype="uint8")
+    ((centerX, centerY), radius) = cv2.minEnclosingCircle(c)
+    cv2.circle(mask, (int(centerX), int(centerY)), int(radius), 255, -1)
+    mask = mask[y : y + h, x : x + w]
+    cv2.imshow("Masked Coin", cv2.bitwise_and(coin, coin, mask=mask))
+    cv2.waitKey(0)

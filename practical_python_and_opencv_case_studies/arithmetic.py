@@ -3,14 +3,15 @@
 
 # Import the necessary packages
 from __future__ import print_function
-import numpy as np
+
 import argparse
-import cv2
+
+from cv2 import cv2
+import numpy as np
 
 # Construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required = True,
-	help = "Path to the image")
+ap.add_argument("-i", "--image", required=True, help="Path to the image")
 args = vars(ap.parse_args())
 
 # Load the image and show it
@@ -39,13 +40,13 @@ print("wrap around: {}".format(np.uint8([50]) - np.uint8([100])))
 # and the multiplying it by 100 to create an array filled
 # with 100's. Then we simply add the images together. Notice
 # how the image is "brighter".
-M = np.ones(image.shape, dtype = "uint8") * 100
+M = np.ones(image.shape, dtype="uint8") * 100
 added = cv2.add(image, M)
 cv2.imshow("Added", added)
 
 # Similarly, we can subtract 50 from all pixels in our
 # image and make it darker:
-M = np.ones(image.shape, dtype = "uint8") * 50
+M = np.ones(image.shape, dtype="uint8") * 50
 subtracted = cv2.subtract(image, M)
 cv2.imshow("Subtracted", subtracted)
 cv2.waitKey(0)

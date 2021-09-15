@@ -3,13 +3,14 @@
 
 # Import the necessary packages
 from __future__ import print_function
+
 import argparse
-import cv2
+
+from cv2 import cv2
 
 # Construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required = True,
-	help = "Path to the image")
+ap.add_argument("-i", "--image", required=True, help="Path to the image")
 args = vars(ap.parse_args())
 
 # Load the image and show it
