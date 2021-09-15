@@ -45,6 +45,13 @@ cv2.waitKey(0)
 # of the canvas with increasing radii - from 25 pixels to
 # 150 pixels
 canvas = np.zeros((300, 300, 3), dtype="uint8")
+# Line 27 calculates two variables: centerX and centerY.
+# These two variables represent the (x, y) coordinates of the
+# center of the image. We calculate the center by examining
+# the shape of our NumPy array, and then dividing by two.
+# The height of the image can be found in canvas.shape[0]
+# and the width in canvas.shape[1]. Finally, Line 28 defines
+# a white pixel.
 (centerX, centerY) = (canvas.shape[1] // 2, canvas.shape[0] // 2)
 white = (255, 255, 255)
 
