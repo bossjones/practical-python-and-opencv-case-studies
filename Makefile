@@ -516,3 +516,7 @@ setup-jupyter-kernel:
 	ipython kernel install --name="${VENV_NAME}" --user
 # Installed kernelspec practical-python-and-opencv-case-studies3 in /Users/malcolm/Library/Jupyter/kernels/practical-python-and-opencv-case-studies3
 # python -m ipykernel install --user --name=practical-python-and-opencv-case-studies3
+.PHONY: install-opencv-typing
+install-opencv-typing:
+# curl -sSL https://raw.githubusercontent.com/bossjones/python-type-stubs/add-opencv/cv2/__init__.pyi -o $(python -c 'import cv2, os; print(os.path.dirname(cv2.__file__))')/cv2.pyi
+	./contrib/install_opencv_typing.sh

@@ -3,7 +3,8 @@
 
 import argparse
 
-from cv2 import cv2
+# from cv2 import cv2
+import cv2
 import imutils
 # Import the necessary packages
 import numpy as np
@@ -20,6 +21,7 @@ cv2.imshow("Original", image)
 # Grab the dimensions of the image and calculate the center
 # of the image
 (h, w) = image.shape[:2]
+# Integer division is used here, denoted as "//" to ensure we receive whole integer numbers.
 center = (w // 2, h // 2)
 
 # Rotate our image by 45 degrees
