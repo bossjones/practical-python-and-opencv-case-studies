@@ -513,5 +513,6 @@ folders:
 # SOURCE: https://queirozf.com/entries/jupyter-kernels-how-to-add-change-remove
 .PHONY: setup-jupyter-kernel
 setup-jupyter-kernel:
-	ipython kernel install --name "${VENV_NAME}" --user
+	ipython kernel install --name="${VENV_NAME}" --user
 # Installed kernelspec practical-python-and-opencv-case-studies3 in /Users/malcolm/Library/Jupyter/kernels/practical-python-and-opencv-case-studies3
+# python -m ipykernel install --user --name=practical-python-and-opencv-case-studies3
