@@ -1,6 +1,11 @@
 # USAGE
 # python bitwise.py
 
+# Bitwise operations operate in a binary manner and are
+# represented as grayscale images. A given pixel is turned
+# 'off' if it has a value of zero, and it is turned 'on' if the
+# pixel has a value greater than zero.
+
 from cv2 import cv2
 # Import the necessary packages
 import numpy as np
