@@ -25,7 +25,7 @@ cv2.imshow("Original", image)
 # Let's translate the image 25 pixels to the right and
 # 50 pixels down
 # ------------------------------------------------
-# 1. We first define our translation matrix M. 
+# 1. We first define our translation matrix M.
 # This matrix tells us how many pixels to the left or right, and up or down, the image will be shifted.
 # ------------------------------------------------
 M = np.float32([[1, 0, 25], [0, 1, 50]])

@@ -1,7 +1,8 @@
 # USAGE
 # python rotate.py --image ../images/trex.png
-from typing import Union, Any
 import argparse
+
+from typing import Any, Union
 
 # from cv2 import cv2
 import cv2

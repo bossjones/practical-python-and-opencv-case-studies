@@ -6,19 +6,20 @@
 
 # Import the necessary packages
 from __future__ import print_function
-from scipy.spatial import distance as dist
-import glob
 
 import argparse
+import glob
 
 from cv2 import cv2
 from matplotlib import pyplot as plt
 import numpy as np
+from scipy.spatial import distance as dist
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--dataset", required=True,
-                help="Path to the directory of images")
+ap.add_argument(
+    "-d", "--dataset", required=True, help="Path to the directory of images"
+)
 args = vars(ap.parse_args())
 # initialize the index dictionary to store the image name
 # and corresponding histograms and the images dictionary
@@ -31,14 +32,13 @@ images = {}
 for imagePath in glob.glob(args["dataset"] + "/*.png"):
     # extract the image filename (assumed to be unique) and
     # load the image, updating the images dictionary
-    filename = imagePath[imagePath.rfind("/") + 1:]
+    filename = imagePath[imagePath.rfind("/") + 1 :]
     image = cv2.imread(imagePath)
     images[filename] = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     # extract a 3D RGB color histogram from the image,
     # using 8 bins per channel, normalize, and update
     # the index
-    hist = cv2.calcHist([image], [0, 1, 2], None, [8, 8, 8],
-                        [0, 256, 0, 256, 0, 256])
+    hist = cv2.calcHist([image], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
     hist = cv2.normalize(hist, hist).flatten()
     index[filename] = hist
 
@@ -62,7 +62,8 @@ for imagePath in glob.glob(args["dataset"] + "/*.png"):
         ("Correlation", cv2.HISTCMP_CORREL),
         ("Chi-Squared", cv2.HISTCMP_CHISQR),
         ("Intersection", cv2.HISTCMP_INTERSECT),
-        ("Hellinger", cv2.HISTCMP_BHATTACHARYYA))
+        ("Hellinger", cv2.HISTCMP_BHATTACHARYYA),
+    )
     # loop over the comparison methods
     for (methodName, method) in OPENCV_METHODS:
         # initialize the results dictionary and the sort
