@@ -2,17 +2,27 @@
 # SOURCE: https://www.pyimagesearch.com/2014/07/14/3-ways-compare-histograms-using-opencv-python/
 # This is how you apply histograms to calculate image similarity
 # USAGE
-# python similarity_histograms.py --image ../images/beach.png
+# python -m practical_python_and_opencv_case_studies.similarity_histogram -d "$(pwd)/images/similarity"
 
 # Import the necessary packages
 from __future__ import print_function
 
+# Import the necessary packages
 import argparse
 import glob
+import pathlib
 
+from IPython.display import display
+from PIL import Image
+import cv2
 from cv2 import cv2
+import imutils
+# Import the necessary packages
 from matplotlib import pyplot as plt
+# Import the necessary packages
 import numpy as np
+from rich import inspect
+from rich.color import Color
 from scipy.spatial import distance as dist
 
 # construct the argument parser and parse the arguments
@@ -21,28 +31,47 @@ ap.add_argument(
     "-d", "--dataset", required=True, help="Path to the directory of images"
 )
 args = vars(ap.parse_args())
+
+# # Calculating path to the input data
+dataset = pathlib.Path(f"{args['dataset']}").resolve()
+
+print(dataset)
+
+assert dataset.exists()
+
+args["dataset"] = f"{args['dataset']}"
+
 # initialize the index dictionary to store the image name
 # and corresponding histograms and the images dictionary
 # to store the images themselves
 index = {}
 images = {}
 
+print(f"args[dataset] = {args['dataset']}\n")
 
+image_files = glob.glob(args["dataset"] + "/*.png")
+image_files = sorted(image_files)
+
+print(f"image_files = {image_files}\n")
 # loop over the image paths
-for imagePath in glob.glob(args["dataset"] + "/*.png"):
+for imagePath in image_files:
+    print(f"imagePath= {imagePath}\n")
     # extract the image filename (assumed to be unique) and
     # load the image, updating the images dictionary
     filename = imagePath[imagePath.rfind("/") + 1 :]
     image = cv2.imread(imagePath)
     images[filename] = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    print(f"images= {images}\n")
     # extract a 3D RGB color histogram from the image,
     # using 8 bins per channel, normalize, and update
     # the index
     hist = cv2.calcHist([image], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
     hist = cv2.normalize(hist, hist).flatten()
     index[filename] = hist
+    print(f"index= {index}\n")
+    print(f"index.keys()= {index.keys()}\n")
 
-    #     print(index)
+    #     #     print(index)
 
     # Compare Histograms using OpenCV and Python
     # Method #1: Using the OpenCV cv2.compareHist function
