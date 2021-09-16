@@ -56,7 +56,7 @@ pygments<2.8
 # Rich is a Python library for rich text and beautiful formatting in the terminal.
 
 # The Rich API makes it easy to add color and style to terminal output. Rich can also render pretty tables, progress bars, markdown, syntax highlighted source code, tracebacks, and more - out of the box.
-rich
+rich[jupyter]
 
 # ASCII art is also known as "computer text art". It involves the smart placement of typed special characters or letters to make a visual shape that is spread over multiple lines of text.
 # ART is a Python lib for text converting to ASCII art fancy. ;-)
