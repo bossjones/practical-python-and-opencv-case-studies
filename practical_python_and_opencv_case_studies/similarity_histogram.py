@@ -18,7 +18,8 @@ import cv2
 from cv2 import cv2
 import imutils
 # Import the necessary packages
-from matplotlib import pyplot as plt
+import matplotlib
+from matplotlib import axes, pyplot as plt
 # Import the necessary packages
 import numpy as np
 from rich import inspect
@@ -113,20 +114,34 @@ for imagePath in image_files:
         # sort the results
         results = sorted([(v, k) for (k, v) in results.items()], reverse=reverse)
 
+        print("results:")
+        print(results)
+        print("")
+        fig: plt.figure
+        ax: axes.SubplotBase
         # show the query image
-        fig = plt.figure("Query")
+        fig = plt.figure("Query", figsize=(5, 5))
+        # add_subplot(nrows, ncols, index, **kwargs)
+        # add_subplot - parameters:
+        # Three integers(nrows, ncols, index). The subplot will take the index position on a grid with nrows rows and ncols columns. index starts at 1 in the upper left corner and increases to the right. index can also be a two - tuple specifying the(first, last) indices(1 - based, and including last) of the subplot, e.g., fig.add_subplot(3, 1, (1, 2)) makes a subplot that spans the upper 2 / 3 of the figure.
         ax = fig.add_subplot(1, 1, 1)
         ax.imshow(images["doge1.png"])
         plt.axis("off")
         # initialize the results figure
-        fig = plt.figure("Results: %s" % (methodName))
+        fig = plt.figure("Results: %s" % (methodName), figsize=(10, 10))
         fig.suptitle(methodName, fontsize=20)
         # loop over the results
         for (i, (v, k)) in enumerate(results):
             # show the result
-            ax = fig.add_subplot(1, len(images), i + 1)
+            print(f"len(images) = {len(images)}")
+            ax = fig.add_subplot(2, 2, i + 1)
+            # ax = fig.add_subplot(1, len(images), i + 1)
+            print("before az.set_title: %s: %.2f" % (k, v))
             ax.set_title("%s: %.2f" % (k, v))
-            plt.imshow(images[k])
             plt.axis("off")
+            # plt.imshow(images[k], aspect='auto')
+            plt.imshow(images[k])
+
+# plt.subplots_adjust(hspace=0, wspace=0)
 # show the OpenCV methods
 plt.show()
