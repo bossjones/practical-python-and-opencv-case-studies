@@ -1,5 +1,6 @@
 # How - To: 3 Ways to Compare Histograms using OpenCV and Python
 # SOURCE: https://www.pyimagesearch.com/2014/07/14/3-ways-compare-histograms-using-opencv-python/
+# SOURCE: https://stackoverflow.com/questions/37973674/matplotlib-pyplot-imshow-tight-spacing-between-images
 # This is how you apply histograms to calculate image similarity
 # USAGE
 # python -m practical_python_and_opencv_case_studies.similarity_histogram -d "$(pwd)/images/similarity"
