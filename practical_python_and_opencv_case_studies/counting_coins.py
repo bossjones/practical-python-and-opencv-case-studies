@@ -7,10 +7,9 @@ from __future__ import print_function
 import argparse
 
 from cv2 import cv2
-import imutils
-import numpy as np
 # from pyimagesearch import imutils
 import imutils
+import numpy as np
 
 # Construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
