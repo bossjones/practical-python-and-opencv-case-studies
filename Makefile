@@ -520,3 +520,6 @@ setup-jupyter-kernel:
 install-opencv-typing:
 # curl -sSL https://raw.githubusercontent.com/bossjones/python-type-stubs/add-opencv/cv2/__init__.pyi -o $(python -c 'import cv2, os; print(os.path.dirname(cv2.__file__))')/cv2.pyi
 	./contrib/install_opencv_typing.sh
+
+jupyter-notebook:
+	jupyter notebook --port=2375 --ip=0.0.0.0
