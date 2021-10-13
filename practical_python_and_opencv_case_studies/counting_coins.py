@@ -2,7 +2,7 @@
 # python counting_coins.py --image ../images/coins.png
 
 # Import the necessary packages
-from __future__ import print_function
+
 
 import argparse
 

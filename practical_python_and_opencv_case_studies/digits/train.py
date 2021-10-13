@@ -1,19 +1,20 @@
 # USAGE
 # python train.py --dataset data/digits.csv --model models/svm.cpickle
 
+import argparse
+
+from pyimagesearch import dataset
+from pyimagesearch.hog import HOG
 # import the necessary packages
 from sklearn.externals import joblib
 from sklearn.svm import LinearSVC
-from pyimagesearch.hog import HOG
-from pyimagesearch import dataset
-import argparse
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--dataset", required = True,
-	help = "path to the dataset file")
-ap.add_argument("-m", "--model", required = True,
-	help = "path to where the model will be stored")
+ap.add_argument("-d", "--dataset", required=True, help="path to the dataset file")
+ap.add_argument(
+    "-m", "--model", required=True, help="path to where the model will be stored"
+)
 args = vars(ap.parse_args())
 
 # load the dataset and initialize the data matrix
@@ -21,21 +22,20 @@ args = vars(ap.parse_args())
 data = []
 
 # initialize the HOG descriptor
-hog = HOG(orientations = 18, pixelsPerCell = (10, 10),
-	cellsPerBlock = (1, 1), transform = True)
+hog = HOG(orientations=18, pixelsPerCell=(10, 10), cellsPerBlock=(1, 1), transform=True)
 
 # loop over the images
 for image in digits:
-	# deskew the image, center it
-	image = dataset.deskew(image, 20)
-	image = dataset.center_extent(image, (20, 20))
+    # deskew the image, center it
+    image = dataset.deskew(image, 20)
+    image = dataset.center_extent(image, (20, 20))
 
-	# describe the image and update the data matrix
-	hist = hog.describe(image)
-	data.append(hist)
+    # describe the image and update the data matrix
+    hist = hog.describe(image)
+    data.append(hist)
 
 # train the model
-model = LinearSVC(random_state = 42)
+model = LinearSVC(random_state=42)
 model.fit(data, target)
 
 # dump the model to file

@@ -2,7 +2,7 @@
 # python getting_and_setting.py --image ../images/trex.png
 
 # Import the necessary packages
-from __future__ import print_function
+
 
 import argparse
 

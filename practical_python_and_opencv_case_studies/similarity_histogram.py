@@ -6,7 +6,7 @@
 # python -m practical_python_and_opencv_case_studies.similarity_histogram -d "$(pwd)/images/similarity"
 
 # Import the necessary packages
-from __future__ import print_function
+
 
 # Import the necessary packages
 import argparse

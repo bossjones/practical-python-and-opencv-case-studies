@@ -2,7 +2,7 @@
 # python color_histograms.py --image ../images/beach.png
 
 # Import the necessary packages
-from __future__ import print_function
+
 
 import argparse
 
