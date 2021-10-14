@@ -523,3 +523,7 @@ install-opencv-typing:
 
 jupyter-notebook:
 	jupyter notebook --port=2375 --ip=0.0.0.0
+
+# https://jupyterlab.readthedocs.io/en/stable/getting_started/starting.html
+jupyter-lab:
+	jupyter lab
