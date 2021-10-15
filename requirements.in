@@ -163,3 +163,13 @@ simpletransformers
 # Python framework for fast Vector Space Modelling
 gensim
 mahotas
+# jupyterlab-lsp
+# https://github.com/python-lsp/python-lsp-server
+python-lsp-server[all]
+# python language server plugins
+pyls-flake8
+# pylsp-mypy
+# pyls-isort
+# python-lsp-black
+# pyls-memestra
+# pylsp-rope
