@@ -70,6 +70,8 @@ botocore==1.21.40
     # via
     #   boto3
     #   s3transfer
+brotli==1.0.9
+    # via flask-compress
 bs4==0.0.1
     # via pyinspect
 cachetools==4.2.2
@@ -94,6 +96,7 @@ clang==5.0
     # via tensorflow
 click==7.1.2
     # via
+    #   flask
     #   nltk
     #   pip-tools
     #   pyinspect
@@ -122,6 +125,14 @@ cycler==0.10.0
     # via matplotlib
 cython==0.29.24
     # via -r requirements.in
+dash==2.0.0
+    # via -r requirements.in
+dash-core-components==2.0.0
+    # via dash
+dash-html-components==2.0.0
+    # via dash
+dash-table==5.0.0
+    # via dash
 dask==2021.9.0
     # via -r requirements.in
 datasets==1.11.0
@@ -175,6 +186,12 @@ filelock==3.0.12
     # via
     #   huggingface-hub
     #   transformers
+flask==2.0.2
+    # via
+    #   dash
+    #   flask-compress
+flask-compress==1.10.1
+    # via dash
 flatbuffers==1.12
     # via tensorflow
 fsspec==2021.8.1
@@ -255,11 +272,14 @@ ipywidgets==7.6.4
     #   ipympl
     #   pydeck
     #   rich
+itsdangerous==2.0.1
+    # via flask
 jedi==0.18.0
     # via ipython
 jinja2==3.0.1
     # via
     #   altair
+    #   flask
     #   jupyter-server
     #   jupyterlab
     #   jupyterlab-server
@@ -498,7 +518,9 @@ pillow==8.3.2
 pip-tools==6.2.0
     # via -r requirements.in
 plotly==5.3.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   dash
 plumbum==1.7.0
     # via pyfzf
 pooch==1.5.1
@@ -843,6 +865,7 @@ websocket-client==1.2.1
     # via jupyter-server
 werkzeug==2.0.1
     # via
+    #   flask
     #   gutter
     #   tensorboard
 wheel==0.37.0

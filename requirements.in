@@ -145,6 +145,7 @@ torchvision
 # An audio package for PyTorch
 torchaudio
 scikit-image
+dash
 
 
 # needed for https://github.com/A2Zadeh/CMU-MultimodalSDK#user-content-installation
