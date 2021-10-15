@@ -527,3 +527,32 @@ jupyter-notebook:
 # https://jupyterlab.readthedocs.io/en/stable/getting_started/starting.html
 jupyter-lab:
 	jupyter lab
+
+jupyter-kernelspec-install:
+	jupyter kernelspec install ~/.pyenv/versions/${PY_VER_MAJOR}.${PY_VER_MINOR}.${PY_VER_MICRO}/envs/$(VENV_NAME)/share/jupyter/kernels/xpython --sys-prefix
+# ~/.pyenv/versions/${PY_VER_MAJOR}.${PY_VER_MINOR}.${PY_VER_MICRO}/envs/$(VENV_NAME)/share/jupyter/kernels/xpython
+
+
+jupyter-info:
+	jupyter --version
+	echo " "
+	jupyter kernelspec list
+	echo " "
+	jupyter serverextension list
+	echo " "
+	jupyter server extension list
+	echo " "
+	jupyter labextension list
+	echo " "
+
+jupyter-better-exceptions-install:
+	cp -a ./contrib/00-better_exceptions.py ~/.ipython/profile_default/startup/00-better_exceptions.py
+
+jupyter-traceback-install:
+	cp -a ./contrib/00-set-traceback-mode.py ~/.ipython/profile_default/startup/00-set-traceback-mode.py
+
+jupyter-better-exceptions-uninstall:
+	rm -fv ~/.ipython/profile_default/startup/00-better_exceptions.py
+
+jupyter-traceback-uninstall:
+	rm -fv ~/.ipython/profile_default/startup/00-set-traceback-mode.py
