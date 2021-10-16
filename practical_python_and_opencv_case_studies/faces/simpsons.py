@@ -6,6 +6,7 @@
 
 import gc
 import os
+import time
 
 import caer
 import canaro
@@ -17,6 +18,7 @@ from tensorflow.keras.utils import to_categorical
 
 # Best size of images
 IMG_SIZE = (80, 80)
+# Since we don't require color in our images, set this to 1, grayscale
 channels = 1
 char_path = r"../input/the-simpsons-characters-dataset/simpsons_dataset"
 
@@ -53,6 +55,7 @@ plt.imshow(train[0][0], cmap="gray")
 plt.show()
 
 # Separating the array and corresponding labels
+# Reshape the feature set to a 4d tensor so that it can be fed into the model with no restrictions whatsoever
 featureSet, labels = caer.sep_train(train, IMG_SIZE=IMG_SIZE)
 
 
@@ -63,6 +66,7 @@ labels = to_categorical(labels, len(characters))
 
 
 # Creating train and validation data
+# val_ratio=0.2: 20% of the data will go to validation set, 80% goes to training set
 x_train, x_val, y_train, y_val = caer.train_test_split(
     featureSet, labels, val_ratio=0.2
 )
@@ -73,8 +77,12 @@ del featureSet
 del labels
 gc.collect()
 
+# https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/
 # Useful variables when training
+# Definition: The batch size is a number of samples processed before the model is updated.
 BATCH_SIZE = 32
+# An epoch is a term used in machine learning and indicates the number of passes of the entire training dataset the machine learning algorithm has completed. Datasets are usually grouped into batches (especially when the amount of data is very large).
+# Definition: The number of epochs is the number of complete passes through the training dataset.
 EPOCHS = 10
 
 # Image data generator (introduces randomness in network ==> better accuracy)
@@ -97,6 +105,9 @@ model.summary()
 
 # Training the model
 
+print("[INFO] training face recognizer...")
+start = time.time()
+# Schedule the learning rate at specific intervals so that our network will train better
 callbacks_list = [LearningRateScheduler(canaro.lr_schedule)]
 training = model.fit(
     train_gen,
@@ -106,6 +117,8 @@ training = model.fit(
     validation_steps=len(y_val) // BATCH_SIZE,
     callbacks=callbacks_list,
 )
+end = time.time()
+print("[INFO] training took {:.4f} seconds".format(end - start))
 
 print(characters)
 
