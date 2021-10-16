@@ -5,9 +5,10 @@ import os
 import pathlib
 import time
 
+from typing import Any, Union
+
 import cv2 as cv
 import numpy as np
-from typing import Union, Any
 
 ROOT_DIR = os.path.dirname(__file__)
 
