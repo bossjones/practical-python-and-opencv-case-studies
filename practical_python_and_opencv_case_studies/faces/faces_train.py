@@ -1,4 +1,5 @@
 # pylint:disable=no-member
+# python -m practical_python_and_opencv_case_studies.faces.faces_train
 
 import os
 import pathlib
@@ -9,7 +10,7 @@ import numpy as np
 ROOT_DIR = os.path.dirname(__file__)
 
 photos_dir = pathlib.Path(
-    f"/Users/malcolm/dev/bossjones/practical-python-and-opencv-case-studies/images/resouces/faces/train"
+    f"/Users/malcolm/dev/bossjones/practical-python-and-opencv-case-studies/images/resources/faces/train"
 )
 
 
@@ -58,5 +59,5 @@ face_recognizer = cv.face.LBPHFaceRecognizer_create()
 face_recognizer.train(features, labels)
 
 face_recognizer.save(f"{ROOT_DIR}/face_trained.yml")
-np.save(r"{ROOT_DIR}/features.npy", features)
-np.save(r"{ROOT_DIR}/labels.npy", labels)
+np.save(f"{ROOT_DIR}/features.npy", features)
+np.save(f"{ROOT_DIR}/labels.npy", labels)
