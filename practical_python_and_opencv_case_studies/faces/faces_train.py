@@ -19,7 +19,9 @@ DIR = f"{photos_dir}"
 
 haar_cascade = cv.CascadeClassifier(f"{ROOT_DIR}/haar_face.xml")
 
+# image array of faces
 features = []
+# labels of who's face it is
 labels = []
 
 
@@ -42,6 +44,7 @@ def create_train():
             )
 
             for (x, y, w, h) in faces_rect:
+                # crop out the face in the image
                 faces_roi = gray[y : y + h, x : x + w]
                 features.append(faces_roi)
                 labels.append(label)
