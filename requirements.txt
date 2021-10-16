@@ -82,6 +82,12 @@ cachetools==4.2.2
     # via
     #   google-auth
     #   streamlit
+caer==2.0.8
+    # via
+    #   -r requirements.in
+    #   canaro
+canaro==1.1.0
+    # via -r requirements.in
 certifi==2021.5.30
     # via
     #   requests
@@ -404,6 +410,10 @@ multiprocess==0.70.12.2
     # via datasets
 mutagen==1.45.1
     # via -r requirements.in
+mypy==0.910
+    # via caer
+mypy-extensions==0.4.3
+    # via mypy
 nbclassic==0.3.2
     # via jupyterlab
 nbclient==0.5.4
@@ -441,6 +451,7 @@ numba==0.54.0
 numpy==1.19.5
     # via
     #   altair
+    #   caer
     #   colormath
     #   datasets
     #   deepspeech
@@ -453,6 +464,7 @@ numpy==1.19.5
     #   mahotas
     #   matplotlib
     #   numba
+    #   opencv-contrib-python
     #   opencv-python
     #   opt-einsum
     #   pandas
@@ -480,6 +492,8 @@ numpy==1.19.5
     #   transformers
 oauthlib==3.1.1
     # via requests-oauthlib
+opencv-contrib-python==4.5.3.56
+    # via caer
 opencv-python==4.5.3.56
     # via scenedetect
 opt-einsum==3.3.0
@@ -791,7 +805,9 @@ tensorboard-plugin-wit==1.8.0
 tensorboardx==2.4
     # via simpletransformers
 tensorflow==2.6.0
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   canaro
 tensorflow-estimator==2.6.0
     # via tensorflow
 tensorflow-hub==0.12.0
@@ -820,6 +836,7 @@ tokenizers==0.10.3
 toml==0.10.2
     # via
     #   autopep8
+    #   mypy
     #   pylint
     #   streamlit
 tomli==1.2.1
@@ -880,7 +897,9 @@ typing-extensions==3.7.4.3
     # via
     #   aiohttp
     #   aiosql
+    #   caer
     #   huggingface-hub
+    #   mypy
     #   pydantic
     #   tensorflow
     #   torch

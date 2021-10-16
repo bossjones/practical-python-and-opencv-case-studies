@@ -104,6 +104,7 @@ monkeytype==21.5.0
     # via -r requirements-dev.in
 mypy-extensions==0.4.3
     # via
+    #   -c requirements.txt
     #   black
     #   monkeytype
     #   typing-inspect

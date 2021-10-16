@@ -4,13 +4,17 @@
 
 # import the necessary packages
 
-import bpdb
 import argparse
-from typing import Union, Any
+
+from typing import Any, Union
+
+import bpdb
+import cv2
 import numpy as np
 
-import cv2
-from practical_python_and_opencv_case_studies.face_detection.pyimagesearch.facedetector import FaceDetector
+from practical_python_and_opencv_case_studies.face_detection.pyimagesearch.facedetector import (
+    FaceDetector,
+)
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -63,7 +67,9 @@ bpdb.set_trace()
 
 # loop over the faces and draw a rectangle around each
 for (x, y, w, h) in faceRects:
-    print(f"cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2) = cv2.rectangle(image, {(x, y)}, {(x + w, y + h)}, {(0, 255, 0)}, 2)")
+    print(
+        f"cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2) = cv2.rectangle(image, {(x, y)}, {(x + w, y + h)}, {(0, 255, 0)}, 2)"
+    )
     cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
 # show the detected faces
