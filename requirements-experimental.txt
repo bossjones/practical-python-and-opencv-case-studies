@@ -10,10 +10,20 @@ certifi==2021.5.30
     # via
     #   -c requirements.txt
     #   requests
+    #   urllib3
+cffi==1.14.6
+    # via
+    #   -c requirements.txt
+    #   cryptography
 charset-normalizer==2.0.4
     # via
     #   -c requirements.txt
     #   requests
+cryptography==35.0.0
+    # via
+    #   -c requirements.txt
+    #   pyopenssl
+    #   urllib3
 docutils==0.17.1
     # via pyroma
 gitdb==4.0.7
@@ -28,12 +38,21 @@ idna==3.2
     # via
     #   -c requirements.txt
     #   requests
+    #   urllib3
 pbr==5.6.0
     # via stevedore
+pycparser==2.20
+    # via
+    #   -c requirements.txt
+    #   cffi
 pygments==2.7.4
     # via
     #   -c requirements.txt
     #   pyroma
+pyopenssl==21.0.0
+    # via
+    #   -c requirements.txt
+    #   urllib3
 pyroma==3.2
     # via -r requirements-experimental.in
 pyyaml==5.4.1
@@ -48,13 +67,14 @@ six==1.15.0
     # via
     #   -c requirements.txt
     #   bandit
+    #   pyopenssl
 smmap==4.0.0
     # via
     #   -c requirements.txt
     #   gitdb
 stevedore==3.4.0
     # via bandit
-urllib3==1.26.6
+urllib3[secure]==1.26.6
     # via
     #   -c requirements.txt
     #   requests

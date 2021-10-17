@@ -27,10 +27,20 @@ certifi==2021.5.30
     # via
     #   -c requirements.txt
     #   requests
+    #   urllib3
+cffi==1.14.6
+    # via
+    #   -c requirements.txt
+    #   cryptography
 charset-normalizer==2.0.4
     # via
     #   -c requirements.txt
     #   requests
+cryptography==35.0.0
+    # via
+    #   -c requirements.txt
+    #   pyopenssl
+    #   urllib3
 docfly==0.0.18
     # via -r requirements-doc.in
 docutils==0.17.1
@@ -41,6 +51,7 @@ idna==3.2
     # via
     #   -c requirements.txt
     #   requests
+    #   urllib3
 imagesize==1.2.0
     # via sphinx
 jinja2==3.0.1
@@ -69,10 +80,18 @@ pycodestyle==2.7.0
     # via
     #   -c requirements.txt
     #   autopep8
+pycparser==2.20
+    # via
+    #   -c requirements.txt
+    #   cffi
 pygments==2.7.4
     # via
     #   -c requirements.txt
     #   sphinx
+pyopenssl==21.0.0
+    # via
+    #   -c requirements.txt
+    #   urllib3
 pyparsing==2.4.7
     # via
     #   -c requirements.txt
@@ -91,6 +110,7 @@ six==1.15.0
     # via
     #   -c requirements.txt
     #   pathlib-mate
+    #   pyopenssl
     #   rstobj
 snowballstemmer==2.1.0
     # via
@@ -106,7 +126,7 @@ sphinx-copybutton==0.4.0
     # via -r requirements-doc.in
 sphinx-jinja==1.1.1
     # via -r requirements-doc.in
-sphinx-rtd-theme==0.5.1
+sphinx_rtd_theme==0.5.1
     # via -r requirements-doc.in
 sphinxcontrib-applehelp==1.0.2
     # via sphinx
@@ -124,7 +144,7 @@ toml==0.10.2
     # via
     #   -c requirements.txt
     #   autopep8
-urllib3==1.26.6
+urllib3[secure]==1.26.6
     # via
     #   -c requirements.txt
     #   requests

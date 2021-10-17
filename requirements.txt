@@ -36,13 +36,19 @@ astroid==2.6.6
     # via pylint
 astunparse==1.6.3
     # via tensorflow
+async-generator==1.10
+    # via
+    #   trio
+    #   trio-websocket
 async-timeout==3.0.1
     # via aiohttp
 attrs==21.2.0
     # via
     #   aiohttp
     #   jsonschema
+    #   outcome
     #   streamlit
+    #   trio
 audioread==2.1.9
     # via librosa
 autopep8==1.5.7
@@ -92,10 +98,12 @@ certifi==2021.5.30
     # via
     #   requests
     #   sentry-sdk
+    #   urllib3
 cffi==1.14.6
     # via
     #   argon2-cffi
     #   bcrypt
+    #   cryptography
     #   sounddevice
     #   soundfile
 chardet==4.0.0
@@ -131,6 +139,10 @@ configparser==5.0.2
     # via wandb
 contextlib2==21.6.0
     # via aiosql
+cryptography==35.0.0
+    # via
+    #   pyopenssl
+    #   urllib3
 cycler==0.10.0
     # via matplotlib
 cython==0.29.24
@@ -192,6 +204,8 @@ ffmpeg-normalize==1.22.3
     # via -r requirements.in
 ffmpeg-progress-yield==0.1.2
     # via ffmpeg-normalize
+ffmpy==0.3.0
+    # via -r requirements.in
 filelock==3.0.12
     # via
     #   huggingface-hub
@@ -238,6 +252,8 @@ grpcio==1.40.0
     #   tensorflow
 gutter==0.5.0
     # via -r requirements.in
+h11==0.12.0
+    # via wsproto
 h5py==3.1.0
     # via
     #   -r requirements.in
@@ -251,6 +267,8 @@ idna==3.2
     #   anyio
     #   email-validator
     #   requests
+    #   trio
+    #   urllib3
     #   yarl
 imageio==2.9.0
     # via
@@ -498,6 +516,8 @@ opencv-python==4.5.3.56
     # via scenedetect
 opt-einsum==3.3.0
     # via tensorflow
+outcome==1.1.0
+    # via trio
 packaging==21.0
     # via
     #   bleach
@@ -629,6 +649,8 @@ pylint==2.9.6
     # via python-lsp-server
 pyls-flake8==0.4.0
     # via -r requirements.in
+pyopenssl==21.0.0
+    # via urllib3
 pyparsing==2.4.7
     # via
     #   matplotlib
@@ -731,6 +753,8 @@ scipy==1.7.1
     #   statsmodels
 seaborn==0.11.2
     # via -r requirements.in
+selenium==4.0.0
+    # via -r requirements.in
 send2trash==1.8.0
     # via
     #   jupyter-server
@@ -762,6 +786,7 @@ six==1.15.0
     #   plotly
     #   promise
     #   protobuf
+    #   pyopenssl
     #   python-dateutil
     #   resampy
     #   sacremoses
@@ -773,9 +798,13 @@ smart-open==5.2.1
 smmap==4.0.0
     # via gitdb
 sniffio==1.2.0
-    # via anyio
+    # via
+    #   anyio
+    #   trio
 snowballstemmer==2.1.0
     # via pydocstyle
+sortedcontainers==2.4.0
+    # via trio
 sounddevice==0.4.2
     # via -r requirements.in
 soundfile==0.10.3.post1
@@ -893,6 +922,12 @@ transformers==4.10.2
     # via
     #   -r requirements.in
     #   simpletransformers
+trio==0.19.0
+    # via
+    #   selenium
+    #   trio-websocket
+trio-websocket==0.9.2
+    # via selenium
 typing-extensions==3.7.4.3
     # via
     #   aiohttp
@@ -915,11 +950,12 @@ uritemplate==3.0.1
     # via -r requirements.in
 uritools==3.0.2
     # via -r requirements.in
-urllib3==1.26.6
+urllib3[secure]==1.26.6
     # via
     #   botocore
     #   requests
     #   requests-unixsocket
+    #   selenium
     #   sentry-sdk
 validators==0.18.2
     # via
@@ -952,6 +988,8 @@ wrapt==1.12.1
     # via
     #   astroid
     #   tensorflow
+wsproto==1.0.0
+    # via trio-websocket
 xeus-python==0.13.2
     # via -r requirements.in
 xeus-python-shell==0.1.5
