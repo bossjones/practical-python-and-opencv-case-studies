@@ -1,4 +1,5 @@
 # pylint:disable=no-member
+# python -m practical_python_and_opencv_case_studies.dataset_builder.label_data
 import glob
 import os
 from random import shuffle
@@ -40,12 +41,13 @@ def labelized_data(to_shuffle=False, interactive=False):
     folder.
     :param interactive: boolean to label from terminal
     """
-    movies = glob.glob(f"{constants.dataset_folder}/*.avi")
+    movies = glob.glob(f"{constants.videos_folder}/*.avi")
     if to_shuffle:
         shuffle(movies)
     for fname in movies[::-1]:
         try:
             m, s = np.random.randint(0, 3), np.random.randint(0, 59)
+            print(f"fname = {fname}")
             cap = cv2.VideoCapture(fname)  # video_name is the video being called
             fps = cap.get(cv2.CAP_PROP_FPS)
             cap.set(1, fps * (m * 60 + s))  # Where frame_no is the frame you want
@@ -181,7 +183,7 @@ def generate_pic_from_videos():
     Randomly generate pictures from videos : get the full picture, the right part, the left part.
     So, three pictures are saved for each analyzed frame (chosen randomly).
     """
-    for k, fname in enumerate(glob.glob(f"{constants.dataset_folder}/*.avi")):
+    for k, fname in enumerate(glob.glob(f"{constants.videos_folder}/*.avi")):
         m, s = np.random.randint(0, 3), np.random.randint(0, 59)
         cap = cv2.VideoCapture(fname)
         fps = cap.get(cv2.CAP_PROP_FPS)
@@ -219,7 +221,7 @@ def generate_pic_from_videos():
             except:
                 pass
         print(
-            "\r%d/%d" % (k + 1, len(glob.glob(f"{constants.dataset_folder}/*.avi"))),
+            "\r%d/%d" % (k + 1, len(glob.glob(f"{constants.videos_folder}/*.avi"))),
             end="",
         )
 
@@ -239,11 +241,32 @@ def classify_pics():
         a = model.predict(img.reshape((-1, pic_size, pic_size, 3)), verbose=0)[0]
         if np.max(a) > 0.6:
             char = constants.map_characters[np.argmax(a)]
-            os.rename(p, "./autogenerate/%s/%s" % (char, p.split("/")[2]))
+            os.rename(
+                p,
+                f"{constants.dataset_folder}/autogenerate/%s/%s"
+                % (char, p.split("/")[2]),
+            )
         else:
-            os.remove(p)
+            # os.remove(p)
+            print(f"would remove {p}. skipping...")
         print("\r%d/%d" % (i + 1, d), end="")
 
 
 if __name__ == "__main__":
+    # Catch exception
+    import sys
+
+    from IPython.core import ultratb
+    from IPython.core.debugger import Tracer  # noqa
+    # from bpython.bpdb.debugger import BPdb
+    import bpdb
+    import bpython
+
+    # sys.excepthook = ultratb.FormattedTB(
+    #     mode="Verbose", color_scheme="Linux", call_pdb=True, ostream=sys.__stdout__, debugger_cls=bpdb.BPdb
+    # )
+    sys.excepthook = ultratb.FormattedTB(
+        mode="Verbose", color_scheme="Linux", call_pdb=True, ostream=sys.__stdout__
+    )
+
     labelized_data(interactive=True)
