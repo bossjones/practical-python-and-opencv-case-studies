@@ -2,8 +2,8 @@
 from collections import Counter
 import glob
 import os
-import time
 import pathlib
+import time
 
 from typing import Any, List
 
@@ -32,6 +32,7 @@ ROOT_DIR = os.path.dirname(__file__)
 # pic_size = 64
 pic_size = 80
 batch_size = 32
+# epochs = 200
 epochs = 200
 num_classes = len(constants.map_characters)
 pictures_per_class = 1000
@@ -54,6 +55,7 @@ def filter_images(file_system: List[str]) -> List[str]:
         if p.suffix in IMAGE_EXTENSIONS:
             file_system_images_only.append(f)
     return file_system_images_only
+
 
 def load_pictures(BGR):
     """
@@ -210,7 +212,7 @@ def create_model_six_conv(input_shape):
     model.add(Activation("relu"))
     model.add(Dropout(0.5))
     model.add(Dense(num_classes, activation="softmax"))
-    opt = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+    opt = SGD(learning_rate=0.01, decay=1e-6, momentum=0.9, nesterov=True)
     return model, opt
 
 
@@ -256,12 +258,15 @@ def training(model, X_train, X_test, y_train, y_test, data_augmentation=True):
         # Compute quantities required for feature-wise normalization
         # (std, mean, and principal components if ZCA whitening is applied).
         datagen.fit(X_train)
+        # NOTE: Todo, try this instead maybe?
+        # SOURCE: https://github.com/ceo1207/SimpsonRecognition/commit/db854078d9964f640cb95f9b3a3023707a03ca31
+        # filepath = "checkpoint-{epoch:02d}-{val_acc:.2f}.hdf5"
         filepath = f"{ROOT_DIR}/weights_6conv_%s.hdf5" % time.strftime("%d%m/%Y")
         checkpoint = ModelCheckpoint(
             filepath, monitor="val_accuracy", verbose=0, save_best_only=True, mode="max"
         )
         callbacks_list = [LearningRateScheduler(lr_schedule), checkpoint]
-        history = model.fit_generator(
+        history = model.fit(
             datagen.flow(X_train, y_train, batch_size=batch_size),
             steps_per_epoch=X_train.shape[0] // batch_size,
             epochs=40,
@@ -346,14 +351,17 @@ if __name__ == "__main__":
 
     # from practical_python_and_opencv_case_studies.dataset_builder import train
 
-    X_train, X_test, y_train, y_test = get_dataset(save=True)
+    # get data from the directory containing characters images
+    # first time  use load=False, save=True
+    X_train, X_test, y_train, y_test = get_dataset(save=True, load=False)
     # X_train, X_test, y_train, y_test = get_dataset(load=True)
+    # second time  use load=True, save=false
+    # X_train, X_test, y_train, y_test = get_dataset(save=False, load=True)
     model, opt = create_model_six_conv(X_train.shape[1:])
     model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
     model, history = training(
         model, X_train, X_test, y_train, y_test, data_augmentation=True
     )
-
 
     # # -----------------------------------------------------------
     # # 2021 stuff

@@ -556,3 +556,7 @@ jupyter-better-exceptions-uninstall:
 
 jupyter-traceback-uninstall:
 	rm -fv ~/.ipython/profile_default/startup/00-set-traceback-mode.py
+
+clean-model-data:
+	rm -fv practical_python_and_opencv_case_studies/dataset_builder/*.h5
+	rm -frv practical_python_and_opencv_case_studies/dataset_builder/weights_6conv_*
