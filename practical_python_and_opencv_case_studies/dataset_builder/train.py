@@ -25,36 +25,19 @@ from rich import inspect as rich_inspect, print as rich_print
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 
-from practical_python_and_opencv_case_studies.dataset_builder import constants
+from practical_python_and_opencv_case_studies.dataset_builder import constants, utils
 
 ROOT_DIR = os.path.dirname(__file__)
 
-# pic_size = 64
-pic_size = 80
-batch_size = 32
+# # constants.pic_size = 64
+# constants.pic_size = 80
+# batch_size = 32
+# # epochs = 200
 # epochs = 200
-epochs = 200
-num_classes = len(constants.map_characters)
-pictures_per_class = 1000
-test_size = 0.15
+# num_classes = len(constants.map_characters)
+# constants.pictures_per_class = 1000
+# constants.test_size = 0.15
 
-JSON_EXTENSIONS = [".json", ".JSON"]
-VIDEO_EXTENSIONS = [".mp4", ".mov", ".MP4", ".MOV"]
-AUDIO_EXTENSIONS = [".mp3", ".MP3"]
-GIF_EXTENSIONS = [".gif", ".GIF"]
-MKV_EXTENSIONS = [".mkv", ".MKV"]
-M3U8_EXTENSIONS = [".m3u8", ".M3U8"]
-WEBM_EXTENSIONS = [".webm", ".WEBM"]
-IMAGE_EXTENSIONS = [".png", ".jpeg", ".jpg", ".gif", ".PNG", ".JPEG", ".JPG", ".GIF"]
-
-
-def filter_images(file_system: List[str]) -> List[str]:
-    file_system_images_only = []
-    for f in file_system:
-        p = pathlib.Path(f"{f}")
-        if p.suffix in IMAGE_EXTENSIONS:
-            file_system_images_only.append(f)
-    return file_system_images_only
 
 
 def load_pictures(BGR):
@@ -68,10 +51,10 @@ def load_pictures(BGR):
     labels = []
     for k, char in constants.map_characters.items():
         pictures = [k for k in glob.glob(f"{constants.characters_folder}/%s/*" % char)]
-        pictures = filter_images(pictures)
+        pictures = utils.filter_images(pictures)
         nb_pic = (
-            round(pictures_per_class / (1 - test_size))
-            if round(pictures_per_class / (1 - test_size)) < len(pictures)
+            round(constants.pictures_per_class / (1 - constants.test_size))
+            if round(constants.pictures_per_class / (1 - constants.test_size)) < len(pictures)
             else len(pictures)
         )
         # nb_pic = len(pictures)
@@ -79,7 +62,7 @@ def load_pictures(BGR):
             a = cv2.imread(pic)
             if BGR:
                 a = cv2.cvtColor(a, cv2.COLOR_BGR2RGB)
-            a = cv2.resize(a, (pic_size, pic_size))
+            a = cv2.resize(a, (constants.pic_size, constants.pic_size))
             pics.append(a)
             labels.append(k)
     return np.array(pics), np.array(labels)
@@ -106,8 +89,8 @@ def get_dataset(save=False, load=False, BGR=False):
         h5f.close()
     else:
         X, y = load_pictures(BGR)
-        y = tf.keras.utils.to_categorical(y, num_classes)
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size)
+        y = tf.keras.utils.to_categorical(y, constants.num_classes)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=constants.test_size)
         if save:
             h5f = h5py.File(f"{ROOT_DIR}/dataset.h5", "w")
             h5f.create_dataset("X_train", data=X_train)
@@ -132,7 +115,7 @@ def get_dataset(save=False, load=False, BGR=False):
                     dict(Counter(np.where(y_test == 1)[1])),
                 ]
             )
-            for k in range(num_classes)
+            for k in range(constants.num_classes)
         }
         print(
             "\n".join(
@@ -173,7 +156,7 @@ def create_model_four_conv(input_shape):
     model.add(Dense(512))
     model.add(Activation("relu"))
     model.add(Dropout(0.5))
-    model.add(Dense(num_classes))
+    model.add(Dense(constants.num_classes))
     model.add(Activation("softmax"))
     opt = keras.optimizers.rmsprop(lr=0.0001, decay=1e-6)
     return model, opt
@@ -211,13 +194,13 @@ def create_model_six_conv(input_shape):
     model.add(Dense(1024))
     model.add(Activation("relu"))
     model.add(Dropout(0.5))
-    model.add(Dense(num_classes, activation="softmax"))
+    model.add(Dense(constants.num_classes, activation="softmax"))
     opt = SGD(learning_rate=0.01, decay=1e-6, momentum=0.9, nesterov=True)
     return model, opt
 
 
 def load_model_from_checkpoint(
-    weights_path, six_conv=False, input_shape=(pic_size, pic_size, 3)
+    weights_path, six_conv=False, input_shape=(constants.pic_size, constants.pic_size, 3)
 ):
     if six_conv:
         model, opt = create_model_six_conv(input_shape)
@@ -267,8 +250,8 @@ def training(model, X_train, X_test, y_train, y_test, data_augmentation=True):
         )
         callbacks_list = [LearningRateScheduler(lr_schedule), checkpoint]
         history = model.fit(
-            datagen.flow(X_train, y_train, batch_size=batch_size),
-            steps_per_epoch=X_train.shape[0] // batch_size,
+            datagen.flow(X_train, y_train, batch_size=constants.batch_size),
+            steps_per_epoch=X_train.shape[0] // constants.batch_size,
             epochs=40,
             validation_data=(X_test, y_test),
             callbacks=callbacks_list,
@@ -277,8 +260,8 @@ def training(model, X_train, X_test, y_train, y_test, data_augmentation=True):
         history = model.fit(
             X_train,
             y_train,
-            batch_size=batch_size,
-            epochs=epochs,
+            batch_size=constants.batch_size,
+            epochs=constants.epochs,
             validation_data=(X_test, y_test),
             shuffle=True,
         )

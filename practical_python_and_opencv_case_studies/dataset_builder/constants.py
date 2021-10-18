@@ -26,3 +26,13 @@ characters_folder = f"{dataset_folder}/characters"
 IMG_SIZE = (80, 80)
 # Since we don't require color in our images, set this to 1, grayscale
 channels = 1
+
+
+# pic_size = 64
+pic_size = 80
+batch_size = 32
+# epochs = 200
+epochs = 200
+num_classes = len(map_characters)
+pictures_per_class = 1000
+test_size = 0.15

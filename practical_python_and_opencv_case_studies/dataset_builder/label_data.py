@@ -8,11 +8,13 @@ import keras
 import matplotlib.pyplot as plt
 import numpy as np
 from selenium import webdriver
+import os
 
 # import train
 from practical_python_and_opencv_case_studies.dataset_builder import constants
 
-pic_size = 64
+# pic_size = 64
+pic_size = 80
 
 
 def get_character_name(name):
@@ -222,25 +224,25 @@ def generate_pic_from_videos():
         )
 
 
-# def classify_pics():
-#     """
-#     Use a Keras saved model to classify pictures and move them into the right character folder.
-#     """
-#     l = glob.glob(f"{constants.dataset_folder}/autogenerate/*.jpg")
-#     model = train.load_model_from_checkpoint(
-#         "./models/weights.best_6conv2.hdf5", six_conv=True
-#     )
-#     d = len(l)
-#     for i, p in enumerate(l):
-#         img = cv2.imread(p)
-#         img = cv2.resize(img, (pic_size, pic_size)).astype("float32") / 255.0
-#         a = model.predict(img.reshape((-1, pic_size, pic_size, 3)), verbose=0)[0]
-#         if np.max(a) > 0.6:
-#             char = constants.map_characters[np.argmax(a)]
-#             os.rename(p, "./autogenerate/%s/%s" % (char, p.split("/")[2]))
-#         else:
-#             os.remove(p)
-#         print("\r%d/%d" % (i + 1, d), end="")
+def classify_pics():
+    """
+    Use a Keras saved model to classify pictures and move them into the right character folder.
+    """
+    l = glob.glob(f"{constants.dataset_folder}/autogenerate/*.jpg")
+    model = train.load_model_from_checkpoint(
+        "./models/weights.best_6conv2.hdf5", six_conv=True
+    )
+    d = len(l)
+    for i, p in enumerate(l):
+        img = cv2.imread(p)
+        img = cv2.resize(img, (pic_size, pic_size)).astype("float32") / 255.0
+        a = model.predict(img.reshape((-1, pic_size, pic_size, 3)), verbose=0)[0]
+        if np.max(a) > 0.6:
+            char = constants.map_characters[np.argmax(a)]
+            os.rename(p, "./autogenerate/%s/%s" % (char, p.split("/")[2]))
+        else:
+            os.remove(p)
+        print("\r%d/%d" % (i + 1, d), end="")
 
 
 if __name__ == "__main__":
