@@ -3,10 +3,9 @@ from collections import Counter
 import glob
 import os
 import time
-
 import pathlib
 
-from typing import Any, Union
+from typing import Any, List
 
 import caer
 import canaro
@@ -27,6 +26,8 @@ from sklearn.model_selection import train_test_split
 
 from practical_python_and_opencv_case_studies.dataset_builder import constants
 
+ROOT_DIR = os.path.dirname(__file__)
+
 # pic_size = 64
 pic_size = 80
 batch_size = 32
@@ -35,6 +36,23 @@ num_classes = len(constants.map_characters)
 pictures_per_class = 1000
 test_size = 0.15
 
+JSON_EXTENSIONS = [".json", ".JSON"]
+VIDEO_EXTENSIONS = [".mp4", ".mov", ".MP4", ".MOV"]
+AUDIO_EXTENSIONS = [".mp3", ".MP3"]
+GIF_EXTENSIONS = [".gif", ".GIF"]
+MKV_EXTENSIONS = [".mkv", ".MKV"]
+M3U8_EXTENSIONS = [".m3u8", ".M3U8"]
+WEBM_EXTENSIONS = [".webm", ".WEBM"]
+IMAGE_EXTENSIONS = [".png", ".jpeg", ".jpg", ".gif", ".PNG", ".JPEG", ".JPG", ".GIF"]
+
+
+def filter_images(file_system: List[str]) -> List[str]:
+    file_system_images_only = []
+    for f in file_system:
+        p = pathlib.Path(f"{f}")
+        if p.suffix in IMAGE_EXTENSIONS:
+            file_system_images_only.append(f)
+    return file_system_images_only
 
 def load_pictures(BGR):
     """
@@ -47,6 +65,7 @@ def load_pictures(BGR):
     labels = []
     for k, char in constants.map_characters.items():
         pictures = [k for k in glob.glob(f"{constants.characters_folder}/%s/*" % char)]
+        pictures = filter_images(pictures)
         nb_pic = (
             round(pictures_per_class / (1 - test_size))
             if round(pictures_per_class / (1 - test_size)) < len(pictures)
@@ -73,12 +92,12 @@ def get_dataset(save=False, load=False, BGR=False):
     :return: X_train, X_test, y_train, y_test (numpy arrays)
     """
     if load:
-        h5f = h5py.File("dataset.h5", "r")
+        h5f = h5py.File(f"{ROOT_DIR}/dataset.h5", "r")
         X_train = h5f["X_train"][:]
         X_test = h5f["X_test"][:]
         h5f.close()
 
-        h5f = h5py.File("labels.h5", "r")
+        h5f = h5py.File(f"{ROOT_DIR}/labels.h5", "r")
         y_train = h5f["y_train"][:]
         y_test = h5f["y_test"][:]
         h5f.close()
@@ -87,12 +106,12 @@ def get_dataset(save=False, load=False, BGR=False):
         y = keras.utils.to_categorical(y, num_classes)
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size)
         if save:
-            h5f = h5py.File("dataset.h5", "w")
+            h5f = h5py.File(f"{ROOT_DIR}/dataset.h5", "w")
             h5f.create_dataset("X_train", data=X_train)
             h5f.create_dataset("X_test", data=X_test)
             h5f.close()
 
-            h5f = h5py.File("labels.h5", "w")
+            h5f = h5py.File(f"{ROOT_DIR}/labels.h5", "w")
             h5f.create_dataset("y_train", data=y_train)
             h5f.create_dataset("y_test", data=y_test)
             h5f.close()
@@ -236,7 +255,7 @@ def training(model, X_train, X_test, y_train, y_test, data_augmentation=True):
         # Compute quantities required for feature-wise normalization
         # (std, mean, and principal components if ZCA whitening is applied).
         datagen.fit(X_train)
-        filepath = "weights_6conv_%s.hdf5" % time.strftime("%d%m/%Y")
+        filepath = f"{ROOT_DIR}/weights_6conv_%s.hdf5" % time.strftime("%d%m/%Y")
         checkpoint = ModelCheckpoint(
             filepath, monitor="val_acc", verbose=0, save_best_only=True, mode="max"
         )
@@ -286,7 +305,12 @@ def get_character_dict_and_top_10():
     return char_dict, characters
 
 
-def create_training_data(char_path="", characters=[], channels=constants.channels, IMG_SIZE=constants.IMG_SIZE):
+def create_training_data(
+    char_path="",
+    characters=[],
+    channels=constants.channels,
+    IMG_SIZE=constants.IMG_SIZE,
+):
     train = caer.preprocess_from_dir(
         char_path, characters, channels=channels, IMG_SIZE=IMG_SIZE, isShuffle=True
     )
@@ -296,7 +320,8 @@ def create_training_data(char_path="", characters=[], channels=constants.channel
 
     return train
 
-def var_print(msg:str, var: Any):
+
+def var_print(msg: str, var: Any):
     rich_print(f"{msg}")
     rich_print(f"{var}")
 
@@ -307,9 +332,9 @@ if __name__ == "__main__":
 
     from IPython.core import ultratb
     from IPython.core.debugger import Tracer  # noqa
-    import bpython
     # from bpython.bpdb.debugger import BPdb
     import bpdb
+    import bpython
 
     # sys.excepthook = ultratb.FormattedTB(
     #     mode="Verbose", color_scheme="Linux", call_pdb=True, ostream=sys.__stdout__, debugger_cls=bpdb.BPdb
@@ -320,14 +345,24 @@ if __name__ == "__main__":
 
     # from practical_python_and_opencv_case_studies.dataset_builder import train
 
-    # X_train, X_test, y_train, y_test = train.get_dataset(load=True)
-    # model, opt = train.create_model_six_conv(X_train.shape[1:])
-    # model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
-    # model, history = train.training(
-    #     model, X_train, X_test, y_train, y_test, data_augmentation=True
+    X_train, X_test, y_train, y_test = get_dataset(save=True)
+    # X_train, X_test, y_train, y_test = get_dataset(load=True)
+    model, opt = create_model_six_conv(X_train.shape[1:])
+    model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
+    model, history = training(
+        model, X_train, X_test, y_train, y_test, data_augmentation=True
+    )
+
+
+    # # -----------------------------------------------------------
+    # # 2021 stuff
+    # # -----------------------------------------------------------
+    # char_dict, characters = get_character_dict_and_top_10()
+
+    # training_data = create_training_data(
+    #     char_path=f"{constants.characters_folder}", characters=characters
     # )
-    char_dict, characters = get_character_dict_and_top_10()
 
-    training_data = create_training_data(char_path=f"{constants.characters_folder}", characters=characters)
+    # var_print("dump training data", training_data)
 
-    var_print("dump training data",training_data)
+    # # -----------------------------------------------------------
