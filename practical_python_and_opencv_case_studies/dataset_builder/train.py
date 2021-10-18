@@ -23,6 +23,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from rich import inspect as rich_inspect, print as rich_print
 from sklearn.model_selection import train_test_split
+import tensorflow as tf
 
 from practical_python_and_opencv_case_studies.dataset_builder import constants
 
@@ -103,7 +104,7 @@ def get_dataset(save=False, load=False, BGR=False):
         h5f.close()
     else:
         X, y = load_pictures(BGR)
-        y = keras.utils.to_categorical(y, num_classes)
+        y = tf.keras.utils.to_categorical(y, num_classes)
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size)
         if save:
             h5f = h5py.File(f"{ROOT_DIR}/dataset.h5", "w")
@@ -257,7 +258,7 @@ def training(model, X_train, X_test, y_train, y_test, data_augmentation=True):
         datagen.fit(X_train)
         filepath = f"{ROOT_DIR}/weights_6conv_%s.hdf5" % time.strftime("%d%m/%Y")
         checkpoint = ModelCheckpoint(
-            filepath, monitor="val_acc", verbose=0, save_best_only=True, mode="max"
+            filepath, monitor="val_accuracy", verbose=0, save_best_only=True, mode="max"
         )
         callbacks_list = [LearningRateScheduler(lr_schedule), checkpoint]
         history = model.fit_generator(
