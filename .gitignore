@@ -138,3 +138,6 @@ deeplearning_data/*.png
 deeplearning_data/**/*.jpg
 deeplearning_data/**/*.jpeg
 deeplearning_data/**/*.png
+*.avi
+*.hdf5
+*.h5

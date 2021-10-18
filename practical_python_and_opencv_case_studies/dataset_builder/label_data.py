@@ -1,5 +1,6 @@
 # pylint:disable=no-member
 import glob
+import os
 from random import shuffle
 
 import cv2
@@ -8,10 +9,9 @@ import keras
 import matplotlib.pyplot as plt
 import numpy as np
 from selenium import webdriver
-import os
 
 # import train
-from practical_python_and_opencv_case_studies.dataset_builder import constants
+from practical_python_and_opencv_case_studies.dataset_builder import constants, train
 
 # pic_size = 64
 pic_size = 80
@@ -230,7 +230,7 @@ def classify_pics():
     """
     l = glob.glob(f"{constants.dataset_folder}/autogenerate/*.jpg")
     model = train.load_model_from_checkpoint(
-        "./models/weights.best_6conv2.hdf5", six_conv=True
+        f"{constants.path_to_best_model}", six_conv=True
     )
     d = len(l)
     for i, p in enumerate(l):

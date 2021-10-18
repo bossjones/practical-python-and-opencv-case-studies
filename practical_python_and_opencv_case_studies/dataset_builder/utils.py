@@ -2,7 +2,7 @@
 import os
 import pathlib
 
-from typing import Any, List
+from typing import List
 
 # from keras.callbacks import LearningRateScheduler, ModelCheckpoint
 # from keras.layers import Activation, Conv2D, Dense, Dropout, Flatten, MaxPooling2D

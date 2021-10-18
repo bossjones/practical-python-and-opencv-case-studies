@@ -560,3 +560,12 @@ jupyter-traceback-uninstall:
 clean-model-data:
 	rm -fv practical_python_and_opencv_case_studies/dataset_builder/*.h5
 	rm -frv practical_python_and_opencv_case_studies/dataset_builder/weights_6conv_*
+
+copy-best-model:
+	cp -avf practical_python_and_opencv_case_studies/dataset_builder/weights_6conv_*/*.hdf5 practical_python_and_opencv_case_studies/dataset_builder/models/weights.best_6conv2.hdf5
+
+train:
+	python -m practical_python_and_opencv_case_studies.dataset_builder.train
+
+create-avi:
+	python -m practical_python_and_opencv_case_studies.dataset_builder.convert_to_avi

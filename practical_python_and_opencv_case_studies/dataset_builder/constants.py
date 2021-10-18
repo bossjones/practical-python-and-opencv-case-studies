@@ -1,8 +1,13 @@
+import os
+
 # mkdir -p ~/dev/bossjones/practical-python-and-opencv-case-studies/deeplearning_data/{autogenerate,characters,models}/{captain_kobayashi,eiko_yamano,izana_shinatose,kouichi_tsuruuchi,lalah_hiyama,mozuku_kunato,nagate_tanikaze,norio_kunato,ochiai,samari_ittan,shizuka_hoshijiro,yuhata_midorikawa}/{edited,non_filtered,pic_video}
 
+ROOT_DIR = os.path.dirname(__file__)
 
-movies_path = "/Users/malcolm/Downloads/knights_of_sidonia"
+movies_path = "/Users/malcolm/Downloads/farming/anime/knights_of_sidonia"
 dataset_folder = "/Users/malcolm/dev/bossjones/practical-python-and-opencv-case-studies/deeplearning_data"
+
+videos_folder = f"{dataset_folder}/videos"
 
 map_characters = {
     0: "captain_kobayashi",
@@ -36,3 +41,7 @@ epochs = 200
 num_classes = len(map_characters)
 pictures_per_class = 1000
 test_size = 0.15
+
+# ./models/weights.best_6conv2.hdf5
+# filepath = f"{ROOT_DIR}/weights_6conv_%s.hdf5" % time.strftime("%d%m/%Y")
+path_to_best_model = f"{ROOT_DIR}/models/weights.best_6conv2.hdf5"

@@ -2,10 +2,9 @@
 from collections import Counter
 import glob
 import os
-import pathlib
 import time
 
-from typing import Any, List
+from typing import Any
 
 import caer
 import canaro
@@ -39,7 +38,6 @@ ROOT_DIR = os.path.dirname(__file__)
 # constants.test_size = 0.15
 
 
-
 def load_pictures(BGR):
     """
     Load pictures from folders for characters from the constants.map_characters dict and create a numpy dataset and
@@ -54,7 +52,8 @@ def load_pictures(BGR):
         pictures = utils.filter_images(pictures)
         nb_pic = (
             round(constants.pictures_per_class / (1 - constants.test_size))
-            if round(constants.pictures_per_class / (1 - constants.test_size)) < len(pictures)
+            if round(constants.pictures_per_class / (1 - constants.test_size))
+            < len(pictures)
             else len(pictures)
         )
         # nb_pic = len(pictures)
@@ -90,7 +89,9 @@ def get_dataset(save=False, load=False, BGR=False):
     else:
         X, y = load_pictures(BGR)
         y = tf.keras.utils.to_categorical(y, constants.num_classes)
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=constants.test_size)
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=constants.test_size
+        )
         if save:
             h5f = h5py.File(f"{ROOT_DIR}/dataset.h5", "w")
             h5f.create_dataset("X_train", data=X_train)
@@ -200,7 +201,9 @@ def create_model_six_conv(input_shape):
 
 
 def load_model_from_checkpoint(
-    weights_path, six_conv=False, input_shape=(constants.pic_size, constants.pic_size, 3)
+    weights_path,
+    six_conv=False,
+    input_shape=(constants.pic_size, constants.pic_size, 3),
 ):
     if six_conv:
         model, opt = create_model_six_conv(input_shape)
