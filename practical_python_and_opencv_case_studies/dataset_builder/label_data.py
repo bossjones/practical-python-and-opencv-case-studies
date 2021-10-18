@@ -1,6 +1,5 @@
 # pylint:disable=no-member
 import glob
-import os
 from random import shuffle
 
 import cv2
@@ -9,6 +8,7 @@ import keras
 import matplotlib.pyplot as plt
 import numpy as np
 from selenium import webdriver
+
 # import train
 from practical_python_and_opencv_case_studies.dataset_builder import constants
 
@@ -75,16 +75,29 @@ def labelized_data(to_shuffle=False, interactive=False):
                         if name.lower() not in ["no", "n", ""]:
                             name_char = get_character_name(name)
                             name_new_pic = "pic_{:04d}.jpg".format(
-                                len(glob.glob(f"{constants.characters_folder}/%s/*" % name_char))
+                                len(
+                                    glob.glob(
+                                        f"{constants.characters_folder}/%s/*"
+                                        % name_char
+                                    )
+                                )
                             )
-                            title = f"{constants.characters_folder}/%s/%s" % (name_char, name_new_pic)
+                            title = f"{constants.characters_folder}/%s/%s" % (
+                                name_char,
+                                name_new_pic,
+                            )
                             cv2.imwrite(title, frame[:, : int(frame.shape[1] / 2)])
                             print("Saved at %s" % title)
                             print(
                                 "%s : %d photos labeled"
                                 % (
                                     name_char,
-                                    len(glob.glob(f"{constants.characters_folder}/%s/*" % name_char)),
+                                    len(
+                                        glob.glob(
+                                            f"{constants.characters_folder}/%s/*"
+                                            % name_char
+                                        )
+                                    ),
                                 )
                             )
 
@@ -97,16 +110,29 @@ def labelized_data(to_shuffle=False, interactive=False):
                         if name.lower() not in ["no", "n", ""]:
                             name_char = get_character_name(name)
                             name_new_pic = "pic_{:04d}.jpg".format(
-                                len(glob.glob(f"{constants.characters_folder}/%s/*" % name_char))
+                                len(
+                                    glob.glob(
+                                        f"{constants.characters_folder}/%s/*"
+                                        % name_char
+                                    )
+                                )
                             )
-                            title = f"{constants.characters_folder}/%s/%s" % (name_char, name_new_pic)
+                            title = f"{constants.characters_folder}/%s/%s" % (
+                                name_char,
+                                name_new_pic,
+                            )
                             cv2.imwrite(title, frame[:, int(frame.shape[1] / 2) :])
                             print("Saved at %s" % title)
                             print(
                                 "%s : %d photos labeled"
                                 % (
                                     name_char,
-                                    len(glob.glob(f"{constants.characters_folder}/%s/*" % name_char)),
+                                    len(
+                                        glob.glob(
+                                            f"{constants.characters_folder}/%s/*"
+                                            % name_char
+                                        )
+                                    ),
                                 )
                             )
 
@@ -116,16 +142,29 @@ def labelized_data(to_shuffle=False, interactive=False):
                         if name.lower() not in ["no", "n", ""]:
                             name_char = get_character_name(name)
                             name_new_pic = "pic_{:04d}.jpg".format(
-                                len(glob.glob(f"{constants.characters_folder}/%s/*" % name_char))
+                                len(
+                                    glob.glob(
+                                        f"{constants.characters_folder}/%s/*"
+                                        % name_char
+                                    )
+                                )
                             )
-                            title = f"{constants.characters_folder}/%s/%s" % (name_char, name_new_pic)
+                            title = f"{constants.characters_folder}/%s/%s" % (
+                                name_char,
+                                name_new_pic,
+                            )
                             cv2.imwrite(title, frame)
                             print("Saved at %s" % title)
                             print(
                                 "%s : %d photos labeled"
                                 % (
                                     name_char,
-                                    len(glob.glob(f"{constants.characters_folder}/%s/*" % name_char)),
+                                    len(
+                                        glob.glob(
+                                            f"{constants.characters_folder}/%s/*"
+                                            % name_char
+                                        )
+                                    ),
                                 )
                             )
         except Exception as e:
@@ -172,10 +211,15 @@ def generate_pic_from_videos():
                         ): frame,
                     }
                     for name, img in pics.items():
-                        cv2.imwrite(f"{constants.dataset_folder}/autogenerate/" + name, img)
+                        cv2.imwrite(
+                            f"{constants.dataset_folder}/autogenerate/" + name, img
+                        )
             except:
                 pass
-        print("\r%d/%d" % (k + 1, len(glob.glob(f"{constants.dataset_folder}/*.avi"))), end="")
+        print(
+            "\r%d/%d" % (k + 1, len(glob.glob(f"{constants.dataset_folder}/*.avi"))),
+            end="",
+        )
 
 
 # def classify_pics():
