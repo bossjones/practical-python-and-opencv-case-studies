@@ -1,4 +1,8 @@
+import glob
 import os
+import pathlib
+
+from prompt_toolkit.completion import Completer, WordCompleter, merge_completers
 
 # mkdir -p ~/dev/bossjones/practical-python-and-opencv-case-studies/deeplearning_data/{autogenerate,characters,models}/{captain_kobayashi,eiko_yamano,izana_shinatose,kouichi_tsuruuchi,lalah_hiyama,mozuku_kunato,nagate_tanikaze,norio_kunato,ochiai,samari_ittan,shizuka_hoshijiro,yuhata_midorikawa}/{edited,non_filtered,pic_video}
 
@@ -45,3 +49,17 @@ test_size = 0.15
 # ./models/weights.best_6conv2.hdf5
 # filepath = f"{ROOT_DIR}/weights_6conv_%s.hdf5" % time.strftime("%d%m/%Y")
 path_to_best_model = f"{ROOT_DIR}/models/weights.best_6conv2.hdf5"
+
+chars_list_from_folder = [
+    pathlib.Path(f"{k}").stem for k in glob.glob(f"{characters_folder}/*")
+]
+chars_list_from_folder.append("no")
+
+name_completer = WordCompleter(
+    chars_list_from_folder,
+    ignore_case=True,
+)
+
+yes_no_completer = WordCompleter(
+    ["No", "Right", "Left", "Full", "Stop"], ignore_case=True
+)

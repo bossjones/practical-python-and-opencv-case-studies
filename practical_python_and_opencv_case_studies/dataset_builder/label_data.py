@@ -2,13 +2,27 @@
 # python -m practical_python_and_opencv_case_studies.dataset_builder.label_data
 import glob
 import os
+import pathlib
 from random import shuffle
+import time
 
 import cv2
 import ffmpy
 import keras
+import matplotlib
+from matplotlib import pyplot
 import matplotlib.pyplot as plt
 import numpy as np
+from prompt_toolkit.completion import Completer, WordCompleter, merge_completers
+# from prompt_toolkit.eventloop.defaults import create_event_loop
+from prompt_toolkit.eventloop.inputhook import (
+    new_eventloop_with_inputhook,
+    set_eventloop_with_inputhook,
+)
+from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.lexers import PygmentsLexer
+from prompt_toolkit.patch_stdout import patch_stdout
+from prompt_toolkit.shortcuts import PromptSession, input_dialog, prompt
 from selenium import webdriver
 
 # import train
@@ -16,21 +30,86 @@ from practical_python_and_opencv_case_studies.dataset_builder import constants, 
 
 # pic_size = 64
 pic_size = 80
+# plt.ioff()
+
+kb = KeyBindings()
 
 
-def get_character_name(name):
+@kb.add("c-space")
+def _(event):
+    """
+    Start auto completion. If the menu is showing already, select the next
+    completion.
+    """
+    b = event.app.current_buffer
+    if b.complete_state:
+        b.complete_next()
+    else:
+        b.start_completion(select_first=False)
+
+
+def get_character_name(name: str):
     """
     Get the character name from just a part of it, comparing to saved characters
     :param name: part of the character name
     :return: full name
     """
-    chars = [k.split("/")[2] for k in glob.glob(f"{constants.characters_folder}/*")]
-    char_name = [k for k in chars if name.lower().replace(" ", "_") in k]
+    chars = [
+        pathlib.Path(f"{k}") for k in glob.glob(f"{constants.characters_folder}/*")
+    ]
+    char_name = [
+        f"{k.stem}" for k in chars if name.lower().replace(" ", "_") in f"{k.stem}"
+    ]
+    print(f" [chars] = {chars}")
+    print(f" [char_name] = {char_name}")
     if len(char_name) > 0:
         return char_name[0]
     else:
         print("FAKE NAME")
         return "ERROR"
+
+
+# Explicitly spinning the Event Loop for matplot
+
+
+def slow_loop(N: int, img_axes: matplotlib.image.AxesImage):
+    for j in range(N):
+        time.sleep(0.1)  # to simulate some work
+        img_axes.figure.canvas.flush_events()
+
+
+# # https://github.com/prompt-toolkit/python-prompt-toolkit/blob/5aea076692a304ec2bf8ad18fc59d4885cc462b1/examples/prompts/inputhook.py
+# # https://matplotlib.org/stable/users/interactive_guide.html#input-hook-integration
+# def inputhook(context):
+#     """
+#     When the eventloop of prompt-toolkit is idle, call this inputhook.
+#     This will run the GTK main loop until the file descriptor
+#     `context.fileno()` becomes ready.
+#     :param context: An `InputHookContext` instance.
+#     """
+
+#     def _main_quit(*a, **kw):
+#         gtk.main_quit()
+#         return False
+
+#     gobject.io_add_watch(context.fileno(), gobject.IO_IN, _main_quit)
+#     gtk.main()
+
+# SOURCE: https://github.com/GamestonkTerminal/GamestonkTerminal/blob/e7e49538b03e6271e1709c5229f99b5c6f4b494d/gamestonk_terminal/menu.py
+def inputhook(inputhook_contex):
+    while not inputhook_contex.input_is_ready():
+        # print("not inputhook_contex.input_is_ready")
+        try:
+            # Run the GUI event loop for interval seconds.
+            # If there is an active figure, it will be updated and displayed before the pause, and the GUI event loop (if any) will run during the pause.
+            # This can be used for crude animation. For more complex animation use matplotlib.animation.
+            # If there is no active figure, sleep for interval seconds instead.
+            pyplot.pause(0.5)
+            # img_axes.figure.canvas.flush_events()
+        # pylint: disable=unused-variable
+        except Exception:  # noqa: F841
+            continue
+    return False
 
 
 def labelized_data(to_shuffle=False, interactive=False):
@@ -63,18 +142,45 @@ def labelized_data(to_shuffle=False, interactive=False):
                 if i % np.random.randint(100, 250) == 0:
                     if interactive:
                         plt.ion()
-                    plt.imshow(frame)
+                    img_axes = plt.imshow(frame)
+                    img_axes.figure.canvas.flush_events()
+                    # slow_loop(100, img_axes)
                     plt.show()
-                    where = input("Where is the character ?[No,Right,Left,Full] ")
+                    # where = input("Where is the character ?[No,Right,Left,Full] ")
+                    # where = prompt(
+                    #     title="Where is the character ?", text="Please type one of the following [No,Right,Left,Full] :", completer=constants.yes_no_completer
+                    # ).run()
+                    # input()
+                    where = prompt(
+                        message="Where is the character ? Please type one of the following [No,Right,Left,Full] :",
+                        completer=constants.yes_no_completer,
+                        complete_while_typing=True,
+                        key_bindings=kb,
+                        # inputhook=inputhook
+                        # complete_in_thread=True
+                    )
+                    # set_eventloop_with_inputhook(inputhook)
                     if where.lower() == "stop":
                         # os.remove(fname)
                         raise
 
                     elif where.lower() in ["left", "l"]:
                         plt.close()
-                        plt.imshow(frame[:, : int(frame.shape[1] / 2)])
+                        img_axes = plt.imshow(frame[:, : int(frame.shape[1] / 2)])
+                        img_axes.figure.canvas.flush_events()
                         plt.show()
-                        name = input("Name ?[Name or No] ")
+                        # name = input("Name ?[Name or No] ")
+                        # name = input("Name ?[Name or No] ")
+                        # name = prompt(
+                        #     title="Name ?", text="Please type one of the following [Name or No] :", completer=constants.name_completer
+                        # ).run()
+                        name = prompt(
+                            message="Name ? Please type one of the following [Name or No] :",
+                            completer=constants.name_completer,
+                            complete_while_typing=True,
+                            key_bindings=kb,
+                            # complete_in_thread=True
+                        )
                         plt.close()
                         if name.lower() not in ["no", "n", ""]:
                             name_char = get_character_name(name)
@@ -107,9 +213,17 @@ def labelized_data(to_shuffle=False, interactive=False):
 
                     elif where.lower() in ["right", "r"]:
                         plt.close()
-                        plt.imshow(frame[:, int(frame.shape[1] / 2) :])
+                        img_axes = plt.imshow(frame[:, int(frame.shape[1] / 2) :])
+                        img_axes.figure.canvas.flush_events()
                         plt.show()
-                        name = input("Name ?[Name or No] ")
+                        # name = input("Name ?[Name or No] ")
+                        name = prompt(
+                            message="Name ? Please type one of the following [Name or No] :",
+                            completer=constants.name_completer,
+                            complete_while_typing=True,
+                            key_bindings=kb,
+                            # complete_in_thread=True
+                        )
                         plt.close()
                         if name.lower() not in ["no", "n", ""]:
                             name_char = get_character_name(name)
@@ -141,7 +255,14 @@ def labelized_data(to_shuffle=False, interactive=False):
                             )
 
                     elif where.lower() in ["full", "f"]:
-                        name = input("Name ?[Name or No] ")
+                        # name = input("Name ?[Name or No] ")
+                        name = prompt(
+                            message="Name ? Please type one of the following [Name or No] :",
+                            completer=constants.name_completer,
+                            complete_while_typing=True,
+                            key_bindings=kb,
+                            # complete_in_thread=True
+                        )
                         plt.close()
                         if name.lower() not in ["no", "n", ""]:
                             name_char = get_character_name(name)
@@ -270,3 +391,4 @@ if __name__ == "__main__":
     )
 
     labelized_data(interactive=True)
+    # _name = get_character_name("captain")
