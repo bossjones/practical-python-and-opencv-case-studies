@@ -28,7 +28,8 @@ GIF_EXTENSIONS = [".gif", ".GIF"]
 MKV_EXTENSIONS = [".mkv", ".MKV"]
 M3U8_EXTENSIONS = [".m3u8", ".M3U8"]
 WEBM_EXTENSIONS = [".webm", ".WEBM"]
-IMAGE_EXTENSIONS = [".png", ".jpeg", ".jpg", ".gif", ".PNG", ".JPEG", ".JPG", ".GIF"]
+# IMAGE_EXTENSIONS = [".png", ".jpeg", ".jpg", ".gif", ".PNG", ".JPEG", ".JPG", ".GIF"]
+IMAGE_EXTENSIONS = [".png", ".jpeg", ".jpg", ".PNG", ".JPEG", ".JPG", ".GIF"]
 
 
 def filter_images(file_system: List[str]) -> List[str]:

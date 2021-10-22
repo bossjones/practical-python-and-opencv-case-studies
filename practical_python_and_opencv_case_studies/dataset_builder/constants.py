@@ -13,19 +13,33 @@ dataset_folder = "/Users/malcolm/dev/bossjones/practical-python-and-opencv-case-
 
 videos_folder = f"{dataset_folder}/videos"
 
+# map_characters = {
+#     0: "captain_kobayashi",
+#     1: "lalah_hiyama",
+#     2: "izana_shinatose",
+#     3: "kouichi_tsuruuchi",
+#     4: "eiko_yamano",
+#     5: "mozuku_kunato",
+#     6: "nagate_tanikaze",
+#     7: "norio_kunato",
+#     8: "ochiai",
+#     9: "samari_ittan",
+#     10: "shizuka_hoshijiro",
+#     11: "yuhata_midorikawa",
+# }
+
 map_characters = {
-    0: "captain_kobayashi",
-    1: "lalah_hiyama",
-    # 2: "izana_shinatose",
-    # 3: "kouichi_tsuruuchi",
-    # 4: "eiko_yamano",
-    # 5: "mozuku_kunato",
-    # 6: "nagate_tanikaze",
-    # 7: "norio_kunato",
-    # 8: "ochiai",
-    # 9: "samari_ittan",
-    # 10: "shizuka_hoshijiro",
-    # 11: "yuhata_midorikawa",
+    0: "annie_leonhart",
+    1: "armin_arlert",
+    2:"connie_springer",
+    3:"eren_yeager",
+    4: "erwin_smith",
+    5: "hanji_zoe",
+    6: "historia_reiss",
+    7: "jean_kirschtein",
+    8: "levi_ackerman",
+    9: "mikasa_ackerman",
+    10: "reiner_braun"
 }
 
 # characters_folder = f"{movies_path}/characters"
