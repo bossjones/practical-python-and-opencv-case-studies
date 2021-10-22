@@ -180,5 +180,6 @@ canaro
 
 ffmpy
 selenium
-bing-image-downloader
+# bing-image-downloader
 # prompt_toolkit
+-e git://github.com/bossjones/bing_image_downloader.git#egg=bing-image-downloader
